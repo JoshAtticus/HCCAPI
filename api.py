@@ -1,7 +1,5 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 import json
 from datetime import datetime
 import hashlib # for flash codes
@@ -9,12 +7,6 @@ import zlib # for unlock codes
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
-
-limiter = Limiter(
-    app,
-    key_func=get_remote_address,  # Use the remote address as the rate-limiting key
-    default_limits=["3 per minute"]  # Set the default rate limit
-)
 
 LOG_FILE = 'logs.json' # make sure you create the logs.json file before running api!
 
