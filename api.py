@@ -174,7 +174,7 @@ def get_v1_unlock_code():
         return jsonify({"error": "Invalid IMEI"}), 400
     
     ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
-    log_usage(ip, imei)
+    log_usage(ip, imei, "v1 Unlock Code")
     
     unlock_code = calculate_code_v1(imei, STD1_V1)
     return jsonify({"unlock_code": unlock_code})
@@ -189,7 +189,7 @@ def get_v2_unlock_code():
         return jsonify({"error": "Invalid IMEI"}), 400
     
     ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
-    log_usage(ip, imei)
+    log_usage(ip, imei, "v2 Unlock Code")
     
     unlock_code = calculate_code_v2(imei)
     return jsonify({"unlock_code": unlock_code})
@@ -204,7 +204,7 @@ def get_v2_flash_code():
         return jsonify({"error": "Invalid IMEI"}), 400
     
     ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
-    log_usage(ip, imei)
+    log_usage(ip, imei, "v2 Flash Code")
     
     flash_code = calculate_code_v1(imei, STD2_V1)
     return jsonify({"flash_code": flash_code})
@@ -219,7 +219,7 @@ def get_all_codes_v2():
         return jsonify({"error": "Invalid IMEI"}), 400
 
     ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
-    log_usage(ip, imei)
+    log_usage(ip, imei, "v2 Flash & Unlock Codes")
     
     unlock_code = calculate_code_v2(imei)
     
@@ -243,7 +243,7 @@ def get_all_codes_v1():
         return jsonify({"error": "Invalid IMEI"}), 400
 
     ip = request.headers.get('CF-Connecting-IP', request.remote_addr)
-    log_usage(ip, imei)
+    log_usage(ip, imei, "v1 Flash & Unlock Codes")
 
     unlock_code = calculate_code_v1(imei, STD1_V1)
     
