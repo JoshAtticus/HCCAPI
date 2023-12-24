@@ -19,7 +19,7 @@ Depends on what you do with it.
 - IMEI validation (does this even matter)
 
 ### What if someone spams it?
-All requests are logged and ratelimiting will be added soon:tm:
+All requests are logged and ratelimiting will be added soon™
 
 ### What if someone abuses it?
 Then they'll be the one getting in trouble when I provide logs to their ISP and law enforcement in their country.
