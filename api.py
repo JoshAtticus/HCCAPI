@@ -14,6 +14,7 @@ limiter = Limiter(
     app,
     key_func=get_remote_address,  # Use the remote address as the rate-limiting key
     default_limits=["3 per minute"]  # Set the default rate limit
+)
 
 LOG_FILE = 'logs.json' # make sure you create the logs.json file before running api!
 
