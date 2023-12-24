@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import json
 from datetime import datetime
 import hashlib # for flash codes
 import zlib # for unlock codes
 
 app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 LOG_FILE = 'logs.json' # make sure you create the logs.json file before running api!
 
