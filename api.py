@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import json
 from datetime import datetime
 import hashlib # for flash codes
@@ -7,6 +9,11 @@ import zlib # for unlock codes
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,  # Use the remote address as the rate-limiting key
+    default_limits=["3 per minute"]  # Set the default rate limit
 
 LOG_FILE = 'logs.json' # make sure you create the logs.json file before running api!
 
@@ -166,6 +173,7 @@ def calculate_flash_code(imei, std):
 
 # v1 unlock code api
 @app.route('/api/v1/ucode', methods=['POST'])
+@limiter.limit("3 per minute")
 def get_v1_unlock_code():
     data = request.get_json()
     imei = data.get('imei')
@@ -181,6 +189,7 @@ def get_v1_unlock_code():
 
 # v2 unlock code api
 @app.route('/api/v2/ucode', methods=['POST'])
+@limiter.limit("3 per minute")
 def get_v2_unlock_code():
     data = request.get_json()
     imei = data.get('imei')
@@ -196,6 +205,7 @@ def get_v2_unlock_code():
 
 # flash code api
 @app.route('/api/v2/fcode', methods=['POST'])
+@limiter.limit("3 per minute")
 def get_v2_flash_code():
     data = request.get_json()
     imei = data.get('imei')
@@ -211,6 +221,7 @@ def get_v2_flash_code():
 
 # all codes api v2
 @app.route('/api/v2/all', methods=['POST'])
+@limiter.limit("3 per minute")
 def get_all_codes_v2():
     data = request.get_json()
     imei = data.get('imei')
@@ -235,6 +246,7 @@ def get_all_codes_v2():
 
 # all codes api v1
 @app.route('/api/v1/all', methods=['POST'])
+@limiter.limit("3 per minute")
 def get_all_codes_v1():
     data = request.get_json()
     imei = data.get('imei')
