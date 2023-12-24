@@ -88,23 +88,39 @@ def algo_selector(imei, mode=1):
 def calcv2(imei):
     algo_id = algo_selector(imei)
     return algo1(imei)
+def log_usage(ip, imei, version):
+    try:
+        with open(LOG_FILE, 'r+') as file:
+            try:
+                logs = json.load(file)
+            except json.JSONDecodeError:
+                logs = {}
 
-def log_usage(ip, imei):
-    with open(LOG_FILE, 'r+') as file:
-        try:
-            logs = json.load(file)
-        except json.JSONDecodeError:
-            logs = {}
-        
-        if ip not in logs:
-            logs[ip] = {"first_used": str(datetime.now()), "imeis": []}
-        
-        logs[ip]["last_used"] = str(datetime.now())
-        if imei not in logs[ip]["imeis"]:
-            logs[ip]["imeis"].append(imei)
-        
-        file.seek(0)
-        json.dump(logs, file, indent=4)
+            if not isinstance(logs, dict):
+                raise ValueError("Logs data is not a dictionary")
+
+            if ip not in logs:
+                logs[ip] = {"first_used": str(datetime.now()), "imei_logs": {}}
+
+            logs[ip]["last_used"] = str(datetime.now())
+
+            # Initialize or update the IMEI log entry
+            if imei not in logs[ip]["imei_logs"]:
+                logs[ip]["imei_logs"][imei] = {
+                    "version": version,
+                    "count": 1,
+                    "last_requested": str(datetime.now())
+                }
+            else:
+                logs[ip]["imei_logs"][imei]["count"] += 1
+                logs[ip]["imei_logs"][imei]["last_requested"] = str(datetime.now())
+
+            file.seek(0)
+            json.dump(logs, file, indent=4)
+            file.truncate()
+    except Exception as e:
+        print(f"An error occurred while logging usage: {e}")
+
 
 # imei validation
 def is_valid_imei(imei, version):
