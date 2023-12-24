@@ -19,7 +19,7 @@ Depends on what you do with it.
 - IMEI validation (does this even matter)
 
 ### What if someone spams it?
-All requests are logged and ratelimiting is set to only allow 3 requests per minute.
+All requests are logged ~~and ratelimiting is set to only allow 3 requests per minute.~~ ratelimiting broke lol
 
 ### What if someone abuses it?
 Then they'll be the one getting in trouble when I provide logs to their ISP and law enforcement in their country.
