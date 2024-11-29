@@ -4,7 +4,7 @@ Cool open-source API used for unlocking Huawei Portable/USB Modems. Supports v1 
 ## AQBAEAT (answering questions before anyone even asks them)
 
 ### Why?
-I found an old Huawei Pocket WiFi 2 and made it my life goal to unlock it from Vodafone so I could use 3G Optus before it shuts down.
+I found an old Huawei Pocket WiFi 2 and made it my life goal to unlock it from Vodafone so I could use 3G Optus before it shuts down (RIP 3G).
 
 ### Testing?
 Should work on *most* Huawei modems with a v1 (starting in 86) or v2a1 (starting in 35) IMEI. Only tested on a Huawei E585.
